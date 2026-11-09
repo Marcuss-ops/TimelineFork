@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CanvasRenderer,
   Timeline,
@@ -8,7 +8,12 @@ import {
 import { PreviewMonitor } from './components/PreviewMonitor';
 import { TimelinePlayheadReadout } from './components/TimelinePlayheadReadout';
 import { Transport } from './components/Transport';
-import { isLiveSnapshot, useLivePublisher } from './live/useLivePublisher';
+import {
+  isLiveSnapshot,
+  useLivePublisher,
+  type LiveSnapshot,
+} from './live/useLivePublisher';
+import { useLiveProjectStream } from './live/useLiveProjectStream';
 import { useAssetCatalog } from './live/useAssetCatalog';
 import { Home } from './Home';
 import type { TimelineDocument } from './timeline/document';
@@ -34,6 +39,7 @@ interface EditorShellProps {
   onTitleChange: (title: string) => void;
   error: string | null;
   onError: (message: string | null) => void;
+  onRemoteSnapshot: (snapshot: LiveSnapshot) => void;
 }
 
 function EditorShell({
@@ -45,9 +51,12 @@ function EditorShell({
   onTitleChange,
   error,
   onError,
+  onRemoteSnapshot,
 }: EditorShellProps) {
   const { state } = useTimeline();
   const live = useLivePublisher(state, project, title, projectId);
+
+  useLiveProjectStream({ projectId, project, state, title, onSnapshot: onRemoteSnapshot });
   const titleEditing = useRef(false);
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState(title);
@@ -85,11 +94,6 @@ function EditorShell({
     setEditingTitle(false);
     setTitleDraft(title);
   }
-
-  const liveLabel =
-    live.status === 'offline' ? 'OFFLINE' : live.status === 'conflict' ? 'CONFLICT' : 'LIVE';
-  const liveTone =
-    live.status === 'offline' || live.status === 'conflict' ? 'offline' : 'publishing';
 
   return (
     <div className="app-shell">
@@ -139,12 +143,6 @@ function EditorShell({
           </span>
         </div>
         <div className="topbar-actions">
-          <span
-            className={`status-pill ${liveTone}`}
-            title={live.lastPublished ?? 'Pubblicazione automatica attiva'}
-          >
-            {liveLabel}
-          </span>
           {live.status === 'conflict' ? (
             <button
               type="button"
@@ -180,6 +178,9 @@ function EditorShell({
           <div className="timeline-legend" aria-label="Tracce della timeline">
             <span className="timeline-legend-item">
               <span className="legend-dot video" /> V1 video
+            </span>
+            <span className="timeline-legend-item">
+              <span className="legend-dot" style={{ background: '#3f8f7a' }} /> A0 clip audio
             </span>
             <span className="timeline-legend-item">
               <span className="legend-dot overlay" /> V2 overlay
@@ -233,6 +234,14 @@ function Editor({ projectId, onHome }: { projectId: string; onHome: () => void }
   const [documentError, setDocumentError] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
 
+  const applyRemoteSnapshot = useCallback((snapshot: LiveSnapshot) => {
+    setProject((current) => {
+      if (!current || snapshot.timeline.revision <= current.revision) return current;
+      return snapshot.timeline;
+    });
+    setProjectTitle(snapshot.title);
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     fetch(`/api/projects/${encodeURIComponent(projectId)}`, { cache: 'no-store' })
@@ -258,7 +267,7 @@ function Editor({ projectId, onHome }: { projectId: string; onHome: () => void }
     };
   }, [projectId]);
 
-  const assets = useAssetCatalog();
+  const assets = useAssetCatalog(project?.revision);
   const engine = useMemo(
     () => (project ? createEngine(project, assets) : null),
     [project, assets],
@@ -309,6 +318,7 @@ function Editor({ projectId, onHome }: { projectId: string; onHome: () => void }
         onTitleChange={setProjectTitle}
         error={documentError}
         onError={setDocumentError}
+        onRemoteSnapshot={applyRemoteSnapshot}
       />
     </TimelineProvider>
   );

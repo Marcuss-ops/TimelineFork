@@ -59,6 +59,8 @@ function ActiveVideo({
   asset,
   seconds,
   playing,
+  audioEnabled = false,
+  audioGain = 1,
   className,
   style,
 }: {
@@ -66,6 +68,8 @@ function ActiveVideo({
   asset: MediaAsset | undefined;
   seconds: number;
   playing: boolean;
+  audioEnabled?: boolean;
+  audioGain?: number;
   className: string;
   style?: CSSProperties;
 }) {
@@ -81,6 +85,11 @@ function ActiveVideo({
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
+    // V1 carries its own production audio. The monitor used to hard-mute it,
+    // which made the voiceover audible but every clip silent.
+    video.muted = !audioEnabled;
+    video.volume = Math.max(0, Math.min(1, audioGain));
 
     if (!clipId || !assetUrl) {
       video.pause();
@@ -106,14 +115,23 @@ function ActiveVideo({
     } else if (!video.paused) {
       video.pause();
     }
-  }, [assetUrl, clipId, clipSourceStart, clipTimelineStart, playing, seconds]);
+  }, [
+    assetUrl,
+    clipId,
+    clipSourceStart,
+    clipTimelineStart,
+    playing,
+    seconds,
+    audioEnabled,
+    audioGain,
+  ]);
 
   return (
     <video
       ref={videoRef}
       className={className}
       style={style}
-      muted
+      muted={!audioEnabled}
       playsInline
       preload="metadata"
       onLoadedMetadata={() => {
@@ -225,6 +243,10 @@ export function PreviewMonitor({ assets, timeline, title }: PreviewMonitorProps)
   const mainAsset = mainClip
     ? assets.find((candidate) => candidate.id === mainClip.sourceId)
     : undefined;
+  const mainSegment = mainClip
+    ? timeline.segments.find((segment) => segment.segment_id === mainClip.id)
+    : undefined;
+  const mainAudioEnabled = Boolean(mainClip && mainSegment?.audio_enabled);
   const overlayAsset = overlayClip
     ? assets.find((candidate) => candidate.id === overlayClip.sourceId)
     : undefined;
@@ -259,6 +281,8 @@ export function PreviewMonitor({ assets, timeline, title }: PreviewMonitorProps)
         asset={mainAsset}
         seconds={seconds}
         playing={playing}
+        audioEnabled={mainAudioEnabled}
+        audioGain={mainSegment?.audio_gain ?? 1}
         className={mainClip && mainAsset ? 'monitor-video' : 'monitor-video is-idle'}
       />
       {overlayClip && overlayAsset ? (
@@ -267,6 +291,7 @@ export function PreviewMonitor({ assets, timeline, title }: PreviewMonitorProps)
           asset={overlayAsset}
           seconds={seconds}
           playing={playing}
+          audioEnabled={false}
           className="monitor-overlay-video"
           style={overlayStyle}
         />
@@ -276,6 +301,7 @@ export function PreviewMonitor({ assets, timeline, title }: PreviewMonitorProps)
         <span className={`monitor-live ${playing ? 'is-playing' : ''}`}>
           {playing ? 'PLAYING' : 'PREVIEW'}
           {activeAudio.length > 0 ? ` · ${activeAudio.length} AUDIO` : ''}
+          {mainAudioEnabled ? ' · CLIP AUDIO' : ''}
         </span>
       </div>
       {mainClip ? (
@@ -307,7 +333,7 @@ export function PreviewMonitor({ assets, timeline, title }: PreviewMonitorProps)
         ))}
       </div>
       <div className="monitor-footnote">
-        anteprima video/audio · sorgenti reali · render completo via MCP
+        anteprima video/audio · audio clip incluso · render completo via MCP
       </div>
     </div>
   );

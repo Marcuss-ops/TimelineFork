@@ -34,7 +34,7 @@ export function isLiveSnapshot(value: unknown): value is LiveSnapshot {
 }
 
 /** Revision and selection are not editorial content: ignore them when deciding whether to save. */
-function editorialSignature(document: TimelineDocument): string {
+export function editorialSignature(document: TimelineDocument): string {
   return JSON.stringify({
     frame_rate: document.frame_rate,
     duration_us: document.duration_us,

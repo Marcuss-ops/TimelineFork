@@ -24,6 +24,7 @@ export const OVERLAY_TRACK_ID = 'track-overlay';
 export const VOICEOVER_TRACK_ID = 'track-voiceover';
 export const MUSIC_TRACK_ID = 'track-music';
 export const SFX_TRACK_ID = 'track-sfx';
+export const CLIP_AUDIO_TRACK_ID = 'track-clip-audio';
 
 const CLIP_COLORS = [
   '#4f7cff',
@@ -64,7 +65,7 @@ function segmentClip(item: TimelineSegment, index: number, assets: MediaAsset[])
     sourceStart: usToTime(item.source_in_us),
     selected: false,
     color: CLIP_COLORS[index % CLIP_COLORS.length],
-    label: `${index + 1} · ${assetLabel(item.asset_id, assets)}`,
+    label: `${index + 1} · ${assetLabel(item.asset_id, assets)}${item.audio_enabled ? ' · audio' : ''}`,
   };
 }
 
@@ -94,6 +95,19 @@ function audioClip(item: TimelineAudioTrack, color: string, assets: MediaAsset[]
   };
 }
 
+function segmentAudioClip(item: TimelineSegment, assets: MediaAsset[]): Clip {
+  return {
+    id: `a0-${item.segment_id}`,
+    sourceId: item.asset_id,
+    timelineStart: usToTime(item.timeline_start_us),
+    timelineEnd: usToTime(item.timeline_start_us + item.timeline_duration_us),
+    sourceStart: usToTime(item.source_in_us),
+    selected: false,
+    color: '#3f8f7a',
+    label: `A0 · ${assetLabel(item.asset_id, assets)}`,
+  };
+}
+
 /** Build the complete editor lane set from the editor-owned document. */
 export function tracksFromTimeline(
   timeline: TimelineDocument,
@@ -106,6 +120,16 @@ export function tracksFromTimeline(
     .map((item, index) => segmentClip(item, index, assets));
 
   const tracks: Track[] = [video];
+
+  // Clip audio is stored on the V1 segment, but showing it on its own lane
+  // makes the mix readable in the editor without changing the document.
+  const clipAudio = emptyTrack(CLIP_AUDIO_TRACK_ID, 'audio', 'A0 · Audio clip');
+  clipAudio.locked = true;
+  clipAudio.clips = [...timeline.segments]
+    .filter((item) => item.audio_enabled)
+    .sort((a, b) => a.timeline_start_us - b.timeline_start_us)
+    .map((item) => segmentAudioClip(item, assets));
+  if (clipAudio.clips.length > 0) tracks.push(clipAudio);
 
   if (timeline.overlays && timeline.overlays.length > 0) {
     const overlay = emptyTrack(OVERLAY_TRACK_ID, 'visual', 'V2 · Overlay');
