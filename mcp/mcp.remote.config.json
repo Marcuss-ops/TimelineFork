@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "velox-timeline": {
+      "command": "node",
+      "args": [
+        "/ABS/PATH/TimelineStudio/node_modules/tsx/dist/cli.mjs",
+        "/ABS/PATH/TimelineStudio/mcp/server.ts"
+      ],
+      "env": {
+        "TIMELINE_RELAY_URL": "https://YOUR-PUBLIC-HOST",
+        "TIMELINE_PUBLIC_URL": "https://YOUR-PUBLIC-HOST"
+      }
+    }
+  }
+}

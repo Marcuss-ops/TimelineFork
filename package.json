@@ -1,0 +1,35 @@
+{
+  "name": "timelinestudio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "live": "node --disable-warning=ExperimentalWarning server/live-server.mjs",
+    "mcp": "tsx mcp/server.ts",
+    "mcp:test": "tsx mcp/test-client.ts",
+    "mcp:test:features": "tsx mcp/feature-test.ts",
+    "mcp:typecheck": "tsc -p tsconfig.mcp.json",
+    "start": "npm run build && node --disable-warning=ExperimentalWarning server/live-server.mjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@techsquidtv/canvas-timeline": "^0.7.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "oxlint": "^1.90.0",
+    "tsx": "^4.23.15",
+    "typescript": "~7.0.2",
+    "vite": "^8.3.6"
+  }
+}

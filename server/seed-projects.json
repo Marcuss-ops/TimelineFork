@@ -1,0 +1,333 @@
+[
+  {
+    "project_id": "velox-demo",
+    "title": "Velox · montaggio demo MCP",
+    "timeline": {
+      "revision": 1,
+      "frame_rate": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "duration_us": 12500000,
+      "segments": [
+        {
+          "segment_id": "seg-01",
+          "asset_id": "asset-documentary",
+          "timeline_start_us": 0,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        },
+        {
+          "segment_id": "seg-02",
+          "asset_id": "asset-media-card",
+          "timeline_start_us": 2500000,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        },
+        {
+          "segment_id": "seg-03",
+          "asset_id": "asset-world-map",
+          "timeline_start_us": 5000000,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        },
+        {
+          "segment_id": "seg-04",
+          "asset_id": "asset-device-browser",
+          "timeline_start_us": 7500000,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        },
+        {
+          "segment_id": "seg-05",
+          "asset_id": "asset-shape-gallery",
+          "timeline_start_us": 10000000,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        }
+      ],
+      "overlays": [
+        {
+          "overlay_id": "overlay-market",
+          "asset_id": "asset-overlay-market",
+          "timeline_start_us": 1000000,
+          "timeline_duration_us": 1750000,
+          "source_in_us": 0,
+          "source_duration_us": 1750000,
+          "opacity": 1,
+          "blend_mode": "screen"
+        },
+        {
+          "overlay_id": "overlay-growth",
+          "asset_id": "asset-overlay-growth",
+          "timeline_start_us": 6500000,
+          "timeline_duration_us": 1916667,
+          "source_in_us": 0,
+          "source_duration_us": 1916667,
+          "opacity": 1,
+          "blend_mode": "screen"
+        }
+      ],
+      "voiceovers": [
+        {
+          "track_id": "vo-intro",
+          "asset_id": "asset-voiceover",
+          "timeline_start_us": 400000,
+          "timeline_duration_us": 2300000,
+          "source_in_us": 0,
+          "source_duration_us": 2300000,
+          "gain": 1
+        },
+        {
+          "track_id": "vo-body",
+          "asset_id": "asset-voiceover-2",
+          "timeline_start_us": 7200000,
+          "timeline_duration_us": 4500000,
+          "source_in_us": 0,
+          "source_duration_us": 4500000,
+          "gain": 1
+        }
+      ],
+      "music": [
+        {
+          "track_id": "music-main",
+          "asset_id": "asset-music-bed",
+          "timeline_start_us": 0,
+          "timeline_duration_us": 12500000,
+          "source_in_us": 0,
+          "source_duration_us": 12500000,
+          "gain": 0.7
+        }
+      ],
+      "sfx": [
+        {
+          "track_id": "sfx-switch-1",
+          "asset_id": "asset-sfx-whoosh",
+          "timeline_start_us": 2300000,
+          "timeline_duration_us": 400000,
+          "source_in_us": 0,
+          "source_duration_us": 400000,
+          "gain": 0.9
+        },
+        {
+          "track_id": "sfx-switch-2",
+          "asset_id": "asset-sfx-riser",
+          "timeline_start_us": 7000000,
+          "timeline_duration_us": 500000,
+          "source_in_us": 0,
+          "source_duration_us": 500000,
+          "gain": 0.9
+        }
+      ]
+    },
+    "playhead_us": 0,
+    "updatedAt": "2026-11-08T15:52:19.018Z"
+  },
+  {
+    "project_id": "documentary-cut",
+    "title": "Documentario · city cut",
+    "timeline": {
+      "revision": 1,
+      "frame_rate": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "duration_us": 7500000,
+      "segments": [
+        {
+          "segment_id": "seg-01",
+          "asset_id": "asset-media-card",
+          "timeline_start_us": 0,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        },
+        {
+          "segment_id": "seg-02",
+          "asset_id": "asset-documentary",
+          "timeline_start_us": 2500000,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        },
+        {
+          "segment_id": "seg-03",
+          "asset_id": "asset-world-map",
+          "timeline_start_us": 5000000,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        }
+      ],
+      "overlays": [
+        {
+          "overlay_id": "overlay-market",
+          "asset_id": "asset-overlay-market",
+          "timeline_start_us": 1000000,
+          "timeline_duration_us": 1750000,
+          "source_in_us": 0,
+          "source_duration_us": 1750000,
+          "opacity": 1,
+          "blend_mode": "screen"
+        }
+      ],
+      "voiceovers": [
+        {
+          "track_id": "vo-intro",
+          "asset_id": "asset-voiceover",
+          "timeline_start_us": 400000,
+          "timeline_duration_us": 2300000,
+          "source_in_us": 0,
+          "source_duration_us": 2300000,
+          "gain": 1
+        }
+      ],
+      "music": [
+        {
+          "track_id": "music-main",
+          "asset_id": "asset-music-bed",
+          "timeline_start_us": 0,
+          "timeline_duration_us": 7500000,
+          "source_in_us": 0,
+          "source_duration_us": 7500000,
+          "gain": 0.65
+        }
+      ],
+      "sfx": [
+        {
+          "track_id": "sfx-switch-1",
+          "asset_id": "asset-sfx-whoosh",
+          "timeline_start_us": 2300000,
+          "timeline_duration_us": 400000,
+          "source_in_us": 0,
+          "source_duration_us": 400000,
+          "gain": 0.9
+        }
+      ]
+    },
+    "playhead_us": 0,
+    "updatedAt": "2026-11-07T15:52:39.018Z"
+  },
+  {
+    "project_id": "launch-social",
+    "title": "Product launch · social",
+    "timeline": {
+      "revision": 1,
+      "frame_rate": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "duration_us": 10000000,
+      "segments": [
+        {
+          "segment_id": "seg-01",
+          "asset_id": "asset-shape-gallery",
+          "timeline_start_us": 0,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        },
+        {
+          "segment_id": "seg-02",
+          "asset_id": "asset-documentary",
+          "timeline_start_us": 2500000,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        },
+        {
+          "segment_id": "seg-03",
+          "asset_id": "asset-media-card",
+          "timeline_start_us": 5000000,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        },
+        {
+          "segment_id": "seg-04",
+          "asset_id": "asset-device-browser",
+          "timeline_start_us": 7500000,
+          "timeline_duration_us": 2500000,
+          "source_in_us": 0,
+          "source_duration_us": 2500000,
+          "audio_enabled": false,
+          "audio_gain": 1
+        }
+      ],
+      "overlays": [
+        {
+          "overlay_id": "overlay-growth",
+          "asset_id": "asset-overlay-growth",
+          "timeline_start_us": 6500000,
+          "timeline_duration_us": 1916667,
+          "source_in_us": 0,
+          "source_duration_us": 1916667,
+          "opacity": 1,
+          "blend_mode": "screen"
+        }
+      ],
+      "voiceovers": [
+        {
+          "track_id": "vo-body",
+          "asset_id": "asset-voiceover-2",
+          "timeline_start_us": 4800000,
+          "timeline_duration_us": 4500000,
+          "source_in_us": 0,
+          "source_duration_us": 4500000,
+          "gain": 1
+        }
+      ],
+      "music": [
+        {
+          "track_id": "music-main",
+          "asset_id": "asset-music-bed",
+          "timeline_start_us": 0,
+          "timeline_duration_us": 10000000,
+          "source_in_us": 0,
+          "source_duration_us": 10000000,
+          "gain": 0.65
+        }
+      ],
+      "sfx": [
+        {
+          "track_id": "sfx-switch-2",
+          "asset_id": "asset-sfx-riser",
+          "timeline_start_us": 7500000,
+          "timeline_duration_us": 500000,
+          "source_in_us": 0,
+          "source_duration_us": 500000,
+          "gain": 0.9
+        }
+      ]
+    },
+    "playhead_us": 0,
+    "updatedAt": "2026-11-06T15:52:39.018Z"
+  }
+]

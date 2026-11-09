@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "velox-timeline": {
+      "command": "node",
+      "args": [
+        "/home/pierone/src/go-master/projects/Pyt/VeloxEditing/TimelineStudio/node_modules/tsx/dist/cli.mjs",
+        "/home/pierone/src/go-master/projects/Pyt/VeloxEditing/TimelineStudio/mcp/server.ts"
+      ],
+      "env": {
+        "TIMELINE_RELAY_URL": "http://127.0.0.1:8787"
+      }
+    }
+  }
+}
